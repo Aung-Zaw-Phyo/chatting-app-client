@@ -1,10 +1,9 @@
 import React from "react";
 import {RouterProvider, createBrowserRouter} from 'react-router-dom'
-import { io } from "socket.io-client";
 import './App.css'
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Home, {loader as homeLoader} from "./pages/Home";
+import Login, {action as loginAction} from "./pages/Login";
+import Signup, {action as signupAction} from "./pages/Signup";
 
 const router = createBrowserRouter([
     {
@@ -12,15 +11,23 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Home/>
+                element: <Home/>,
+                loader: homeLoader
+            },
+            {
+                path: '/:id',
+                element: <Home/>,
+                loader: homeLoader
             },
             {
                 path: 'login',
-                element: <Login/>
+                element: <Login/>,
+                action: loginAction
             },
             {
                 path:  'signup',
-                element: <Signup/>
+                element: <Signup/>, 
+                action: signupAction
             }
         ]
     }
@@ -32,18 +39,3 @@ const App = () => {
 export default App;
 
 
-// const [time, setTime] = React.useState("fetching");
-//     React.useEffect(() => {
-//         const socket = io("http://localhost:8080");
-//         socket.on("connect", () => console.log(socket.id));
-
-//         socket.on("connect_error", () => {
-//             setTimeout(() => socket.connect(), 5000);
-//         });
-
-//         socket.on("time", (data) => setTime(data));
-//         socket.on("disconnect", () => setTime("server disconnected"));
-//     }, []);
-//     return (
-//         <div className="App">{time}</div>
-//     );

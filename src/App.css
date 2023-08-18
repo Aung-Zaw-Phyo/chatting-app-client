@@ -9,8 +9,8 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #383f44;
+    background-color: #262E35;
     color: white;
     min-height: 100vh;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }

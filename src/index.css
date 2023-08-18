@@ -32,3 +32,19 @@ body {
     @apply px-4 md:px-8 mx-auto;
   }
 }
+
+@layer utilities {
+  @variants responsive {
+    .no-scrollbar::-webkit-scrollbar {
+      width: 5px;
+    }
+    
+    .no-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #36404A;
+    }
+    
+    .no-scrollbar::-webkit-scrollbar-track {
+      background-color: #36404A;
+    }
+  }
+}
