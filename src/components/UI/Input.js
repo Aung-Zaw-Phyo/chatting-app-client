@@ -12,7 +12,7 @@ const Input = (props) => {
     const defaultValue = props.defaultValue
     const placeholder = props.placeholder
     const error = props.error
-    const inputClasses = `${props.className} block rounded w-full p-2 outline-none border-[1.5px] border-[#2a2a2a] bg-[#2a2a2a] text-white duration-300`
+    const inputClasses = `${props.className} block rounded-lg w-full p-2 outline-none border-[1.5px] border-[#2a2a2a] bg-[#2a2a2a] text-white duration-300`
     return (
         <div className="mb-3 w-full">
             {/* <div  className="block mb-2">
@@ -26,7 +26,7 @@ const Input = (props) => {
                 placeholder={placeholder}
             />
             {
-                error && <p className="mt-1 text-red-700">Please enter a valid {name}.</p>
+                error && <p className="mt-1 text-red-500">{error}</p>
             }
         </div>
     );

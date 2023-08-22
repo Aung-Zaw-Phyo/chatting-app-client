@@ -14,13 +14,13 @@ body {
 
 @layer base {
   button {
-    @apply rounded duration-300 bg-[#ffbe33] hover:bg-[#ffbe33d2] text-white p-2;
+    @apply rounded-lg duration-300 bg-[#6159CB] hover:bg-[#5b52d1] text-white p-2;
   }
   .outline_btn {
     @apply w-auto  bg-transparent text-[#333] border-[1px] border-[#ffbe33] hover:bg-[#ffbe33] hover:text-white duration-300;
   }
   .btn_disable {
-    @apply bg-[#5742e383] hover:bg-[#5742e383];
+    @apply bg-[#6159cb3a] hover:bg-[#6159cb3a];
   }
   .title {
     @apply font-medium text-[26px];

@@ -1,58 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-import { defer, json, useLoaderData, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { defer, json } from "react-router-dom";
 import SideBar from "../components/sidebar/SideBar";
 import ChatScreen from "../components/chat_screen/ChatScreen";
+import { useDispatch } from "react-redux";
+import { initSocket } from "../Socket";
+import { getAuth } from "../utils/helper";
+import Cookies from "js-cookie";
 
-let socket = io("http://192.168.0.113:5000");;
 const Home = () => {
-    const [msg, setMsg] = useState('')
-    const [users, setUsers] = useState([])
-    const [toAcc, setToAcc] = useState(null)
-    const [time, setTime] = React.useState("fetching");
+    const dispatch = useDispatch()
 
-    const loadedData = useLoaderData()
+    // var in30Minutes = 1/48;
+    // Cookies.set('foo', 'bar', {
+    //     expires: in30Minutes
+    // });
+    console.log(Cookies.get('foo'))
 
     useEffect(() => {
-        const fetchRequest = async () => {
-            const response = await fetch('http://192.168.0.113:5000/chat/users')
-            const resData = await response.json()
-            setUsers(resData.data.users)
+        let socket = initSocket("http://localhost:5000");
+        socket.emit('join-room', getAuth().id);
+        return () => {
+            socket.on('disconnect')
         }
-        
-        fetchRequest()
-    }, [])
-
-    useEffect(() => {
-        socket.on("connect", () => console.log(socket.id));
-        socket.emit('join-room', JSON.parse(localStorage.getItem('user')).email);
-
-        socket.on("connect_error", () => {
-            setTimeout(() => socket.connect(), 5000);
-        });
-
-        // socket.on("time", (data) => setTime(data));
-        socket.on("disconnect", () => setTime("server disconnected"));
-    }, []);
-
-    useEffect(() => {
-        socket.on('receive-msg', (data) => {
-            console.log(data)
-        })
-    }, [msg])
-
-    const submitHandler = (e) => {
-        e.preventDefault()
-        if(!toAcc){
-            alert('Select user.')
-            return
-        }
-        socket.emit('send-msg', {message: msg, roomId: toAcc.email})
-    }
-
-    const direction = (user) => {
-        setToAcc(user)
-    }
+    }, [dispatch]);
 
     return (
         <div className="flex h-screen w-screen ">
@@ -64,27 +34,15 @@ const Home = () => {
 
 export default Home;
 
-const usersLoader = async () => {
-    const response = await fetch('http://localhost:5000/chat/users', {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
-
-    if(!response.ok) {
-        throw json({message: 'Something wrong.'}, {status: 500})
-    }
-
-    const resData = response.json()
-    return resData
-}
-
-const messageLoader = async (params) => {
+const chatLoader = async (params) => {
     const id = params.id
+    if(!id) {
+        const response = {message: 'Select Chat', status: 'INITIAL'}
+        throw response
+    }
     const response = await fetch('http://localhost:5000/chat/message/' + id, {
         method: 'GET',
+        credentials: 'include',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -95,13 +53,12 @@ const messageLoader = async (params) => {
         throw json({message: 'Something wrong.'}, {status: 500})
     }
 
-    const resData = response.json()
+    const resData = await response.json()
     return resData
 }
 
 export const loader = ({request, params}) => {
     return defer({
-        users: usersLoader(),
-        chat: messageLoader(params)
+        chat: chatLoader(params)
     })
 }
