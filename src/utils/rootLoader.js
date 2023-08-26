@@ -1,7 +1,5 @@
 import { defer, json } from "react-router-dom"
 
-
-
 const loader = async () => {
     const response = await fetch('http://localhost:5000/chat/users', {
         method: 'GET',

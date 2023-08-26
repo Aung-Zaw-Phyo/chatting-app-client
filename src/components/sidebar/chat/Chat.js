@@ -8,12 +8,12 @@ import UserList from "./UserList";
 const Chat = ({loadedData}) => {
     return (
         <>
-            <ChatHeader/>
+            <ChatHeader />
             <section className="p-5 overflow-y-scroll overflow-x-hidden no-scrollbar" style={{ height: 'calc(100vh - 140px)' }}>
                 <div className="h-full">
                     <Suspense fallback={<ComponentLoading/>}>
                         <Await resolve={loadedData.data} errorElement={<ComponentError/>}>
-                            {(data) => <UserList users={data.data.users}/> }
+                            {(data) => <UserList data={data.data}/> }
                         </Await>
                     </Suspense>
                     

@@ -62,7 +62,9 @@ export const action = async ({request, params}) => {
 
     const resData = await response.json()
     const user = resData.data.user
-    let encode = CryptoJS.AES.encrypt(JSON.stringify({id: user.id, email: user.email}), process.env.REACT_APP_SECRET_KEY).toString();
-    Cookies.set('auth', encode)
+    let encode = CryptoJS.AES.encrypt(JSON.stringify({id: user.id, email: user.email, status: user.status}), process.env.REACT_APP_SECRET_KEY).toString();
+    Cookies.set('auth', encode, {
+        expires: 46 // 48 => 1 day
+    })
     return redirect('/')
 }

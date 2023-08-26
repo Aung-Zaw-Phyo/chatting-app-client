@@ -8,8 +8,8 @@ const initialState = {
     initial: true
 }
 
-const chatSlice = createSlice({
-    name: 'chat',
+const privateSlice = createSlice({
+    name: 'private',
     initialState: initialState,
     reducers: {
         chatInit(state, action) {
@@ -46,6 +46,6 @@ const chatSlice = createSlice({
     }
 })
 
-export const chatActions = chatSlice.actions
+export const privateActions = privateSlice.actions
 
-export default chatSlice
+export default privateSlice

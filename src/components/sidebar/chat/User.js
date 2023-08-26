@@ -18,9 +18,9 @@ const User = ({user}) => {
             userId !== user.id && (
                 <NavLink key={user.id}
                     className={`${user.id === id ? ' bg-[#36404A] block rounded-lg ' : ''}`}
-                    to={`/${user.id}`} onClick={hidePicker}
+                    to={`/p/${user.id}`} onClick={hidePicker}
                 >
-                    <div className="flex items-center py-2 rounded-lg cursor-pointer hover:bg-[#36404A] duration-300">
+                    <div className="flex items-center p-2 rounded-lg cursor-pointer hover:bg-[#36404A] duration-300">
                         <img className="w-[45px] h-[45px] rounded-full mr-3" src={user.image} alt="" />
                         <div>
                             <h1>{user.name}</h1>

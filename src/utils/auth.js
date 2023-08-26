@@ -32,3 +32,13 @@ export const authFormLoader = () => {
     }
 }
 
+
+export const logoutLoader = async () => {
+    const response = fetch(process.env.REACT_APP_API_URL + '/logout', {
+        method: 'POST',
+        credentials: 'include'
+    })
+
+    Cookies.remove('auth')
+    return redirect('/login')
+}

@@ -7,7 +7,10 @@ import Signup, {action as signupAction} from "./pages/Signup";
 import { usersLoader } from './utils/rootLoader'
 import Error from "./pages/Error";
 import Root from "./pages/Root";
-import { authCheckLoader, authFormLoader } from "./utils/auth";
+import {action as updateProfileAction} from './components/sidebar/profile/Profile'
+import { authCheckLoader, authFormLoader, logoutLoader } from "./utils/auth";
+import Dashboard, {loader as adminLoader} from "./pages/Dashboard";
+import Detail, {loader as detailLoader} from "./pages/Detail";
  
 const router = createBrowserRouter([
     {
@@ -24,15 +27,38 @@ const router = createBrowserRouter([
                     {
                         index: true,
                         element: <Home/>, 
-                        loader: homeLoader
+                        loader: homeLoader,
+                        action: updateProfileAction
                     },
                     {
-                        path: '/:id',
-                        element: <Home/>,
-                        loader: homeLoader
+                        path: 'p/:id',
+                        element: <Home chatType="private"/>,
+                        loader: homeLoader,
+                        action: updateProfileAction
+                    },
+                    {
+                        path: 'g/:id',
+                        element: <Home chatType="group"/>,
+                        loader: homeLoader,
+                        action: updateProfileAction
                     },
                 ]
             },
+        ]
+    },
+    {
+        path: '/admin',
+        children: [
+            {
+                path: '/admin',
+                element: <Dashboard/>,
+                loader: adminLoader
+            },
+            {
+                path: 'detail/:id',
+                element: <Detail/>,
+                loader: detailLoader
+            }
         ]
     },
     {
@@ -48,6 +74,10 @@ const router = createBrowserRouter([
         element: <Signup/>, 
         action: signupAction,
         loader: authFormLoader
+    },
+    {
+        path: '/logout',
+        loader: logoutLoader
     }
 ])
 

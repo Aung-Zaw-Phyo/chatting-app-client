@@ -26,7 +26,7 @@ const Input = (props) => {
                 placeholder={placeholder}
             />
             {
-                error && <p className="mt-1 text-red-500">{error}</p>
+                error && <p className="mt-1 text-red-500">Please enter a valid {name}.</p>
             }
         </div>
     );

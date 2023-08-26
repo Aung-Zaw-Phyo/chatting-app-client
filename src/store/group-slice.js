@@ -8,8 +8,8 @@ const initialState = {
     initial: true
 }
 
-const chatSlice = createSlice({
-    name: 'chat',
+const groupSlice = createSlice({
+    name: 'group',
     initialState: initialState,
     reducers: {
         chatInit(state, action) {
@@ -46,6 +46,6 @@ const chatSlice = createSlice({
     }
 })
 
-export const chatActions = chatSlice.actions
+export const groupActions = groupSlice.actions
 
-export default chatSlice
+export default groupSlice

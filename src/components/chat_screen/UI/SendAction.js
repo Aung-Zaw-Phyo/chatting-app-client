@@ -6,24 +6,25 @@ import { GrEmoji } from "react-icons/gr";
 
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-import { uiActions } from "../../store/ui-slice";
-import { generateBase64FromImage } from "../../utils/image";
-import { useParams } from "react-router-dom";
+import { uiActions } from "../../../store/ui-slice";
+import { generateBase64FromImage } from "../../../utils/image";
 
-const ChatAction = (props) => {
+const SendAction = (props) => {
     const [messageInput, setMessageInput] = useState('')
     const [fileInput, setFileInput] = useState(null)
     const [imagePreview, setImagePreview] = useState(null)
 
-    const params = useParams()
-    const id = params.id
-
     const emojiElementRef = useRef()
     const emojiPickerRef = useRef()
     const fileInputRef = useRef()
-    const chat = useSelector(state => state.chat)
     const emojiPicker = useSelector(state => state.ui.emojiPicker)
     const dispatch = useDispatch()
+    const privateChat = useSelector(state => state.private)
+    const groupChat = useSelector(state => state.group)
+    let chat = privateChat
+    if(props.type === 'group') {
+        chat = groupChat
+    }
 
     const sendMessageHandler = async () => {
         if(messageInput.trim() === '' && fileInput === null) {
@@ -81,7 +82,8 @@ const ChatAction = (props) => {
     }
 
     return (
-        <div className="p-5 py-8 border-t-[0.5px] border-t-gray-600 mt-auto  w-full flex relative" >
+        <div className="p-5 py-8 border-t-[0.5px] border-t-gray-600 mt-auto flex w-full relative" >
+            <div className="absolute bottom-[110%] left-[50%] -translate-x-1/2 text-[red] text-center text-[18px]">{chat.error}</div>
             <span onClick={filePicker} className="bg-[#36404A] h-[45px] w-[80px] flex justify-center items-center p-3 rounded-lg mr-1 cursor-pointer"> <HiUpload size={20}/> </span>
             <input 
                 hidden
@@ -90,7 +92,7 @@ const ChatAction = (props) => {
                 onChange={fileChangeHandler}
             />
             <div className="absolute bottom-[80%]">
-                { fileInput && <img src={imagePreview} className=" rounded-lg w-[120px] h-[120px] bg-[#151617] p-3" alt="" /> }
+                { fileInput && <div className="bg-[#36404A] p-3 rounded-lg"><img src={imagePreview} className=" rounded-lg w-[110px] h-[110px] " alt="" /></div> }
             </div>
 
             <div className="absolute bottom-[80%]" ref={emojiElementRef}>
@@ -112,4 +114,4 @@ const ChatAction = (props) => {
     );
 };
 
-export default ChatAction;
+export default SendAction;

@@ -1,10 +1,17 @@
-import { configureStore } from "@reduxjs/toolkit";
-import chatSlice from "./chat-slice";
+import {
+    configureStore
+} from "@reduxjs/toolkit";
 import uiSlice from "./ui-slice";
+import privateSlice from './private-slice'
+import groupSlice from './group-slice'
 
 
 const store = configureStore({
-    reducer: {chat: chatSlice.reducer, ui: uiSlice.reducer}
+    reducer: {
+        ui: uiSlice.reducer,
+        private: privateSlice.reducer,
+        group: groupSlice.reducer
+    }
 })
 
 export default store
