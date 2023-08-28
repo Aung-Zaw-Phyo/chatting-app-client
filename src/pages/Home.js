@@ -67,6 +67,15 @@ const Home = ({ chatType }) => {
             }
         })
 
+        socket.on('delete-msg', data => {
+            if(data.type === 'PRIVATE') {
+                dispatch(privateActions.deleteMessage(data.message))
+            }
+            if(data.type === 'GROUP') {
+                dispatch(groupActions.deleteMessage(data.message))
+            }
+        })
+
         return () => {
             socket.on('disconnect')
         }

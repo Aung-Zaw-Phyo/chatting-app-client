@@ -2,16 +2,18 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useHttp from "../../../hooks/use-http";
-import { chatActions } from "../../../store/chat-slice";
 import SendAction from "../UI/SendAction";
 import { addGroupMessageRequest } from "../../../store/chat-actions";
 import { getAuth } from "../../../utils/helper";
+import { AiFillDelete } from "react-icons/ai";
+import { groupActions } from "../../../store/group-slice";
+import { privateActions } from "../../../store/private-slice";
 
 const GroupMessage = (props) => {
     const [page, setPage] = useState(1)
     const chatFeedBottomRef = useRef(null);
     const chatFeedTopRef = useRef(null);
-    const [pagination, setPagination] = useState(false)
+    const [scroll, setScroll] = useState(true)
     const dispatch = useDispatch()
     const chat = useSelector(state => state.group)
     const messages = useSelector(state => state.group.messages)
@@ -22,7 +24,7 @@ const GroupMessage = (props) => {
     const userId = getAuth().id
 
     const scrollBottom = useCallback(() => {
-        if(pagination === true) {
+        if(scroll === false) {
             if (chatFeedTopRef.current) {
                 chatFeedTopRef.current.scrollIntoView();
             }
@@ -40,7 +42,7 @@ const GroupMessage = (props) => {
                 chatFeedBottomRef.current.scrollIntoView({ behavior: 'smooth' });
             }
         }
-    }, [pagination, chat.initial])
+    }, [scroll, chat.initial])
 
     useEffect(() => {
         setTimeout(() => {
@@ -49,10 +51,35 @@ const GroupMessage = (props) => {
     }, [messages,scrollBottom])
 
     const sendMessage = (data) => {
-        setPagination(false)
+        setScroll(true)
         dispatch(addGroupMessageRequest(data, id))
     }
 
+    // delete message feature
+    const {
+        isLoading: deleteLoading,
+        error: deleteError,
+        sendRequest: deleteRequest
+    } = useHttp()
+    
+    const deleteMessage = (msg_id) => {
+        setScroll(false)
+        const applyData = (data) => {
+            const message = data.data.message
+            dispatch(groupActions.deleteMessage(message))
+        }
+        deleteRequest({
+            url: 'http://localhost:5000/chat/group/message/' + msg_id ,
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }, applyData)
+    }
+
+
+    // paginate feature
     const {
         isLoading: paginateLoading,
         error: paginateError,
@@ -66,10 +93,9 @@ const GroupMessage = (props) => {
             const element = event.target;
             if (element.scrollTop < 30 && !paginateLoading ) {
                 const pg = page + 1
-                setPagination(true)
                 const applyData = (data) => {
                     const messages = data.data.messages
-                    dispatch(chatActions.paginateMessage(messages))
+                    dispatch(privateActions.paginateMessage(messages))
                 }
                 setPage((prevState) => pg)
                 paginateRequest({
@@ -98,17 +124,27 @@ const GroupMessage = (props) => {
                     messages && messages.map((msg, index) => (
                         <div key={msg.id} className={`${userId === msg.user.id ? ' items-end text-end ': ' items-start text-start '} d-inline-block flex flex-col mb-2 `}>
                             { msg.group.id === id  &&
-                                <>
+                                <div className={`${userId !== msg.user.id ? ' text-start items-start ' : ' items-end '} relative group flex flex-col max-w-[75%]`}>
+                                    {
+                                        userId === msg.user.id &&
+                                        <div className="
+                                            absolute top-0 right-[100%] p-2  text-[#ffffff76]
+                                            hover:text-[white] duration-300
+                                        ">
+                                            <AiFillDelete onClick={deleteMessage.bind(null, msg.id)} size={20} className="cursor-pointer translate-x-[140%] z-0 group-hover:translate-x-0 duration-300"/>
+                                        </div>
+                                    }
+
                                     {
                                         userId !== msg.user.id && <span className="text-[#dddddda1] text-[14px] p-1">{msg.user.name}</span>
                                     }
                                     {
-                                        msg.image && <img src={msg.image} className="w-[180px] rounded-lg mb-1" alt="" />
+                                        msg.image && <img src={msg.image} className="w-[160px] rounded-lg mb-1 z-10" alt="" />
                                     }
                                     {
-                                        msg.text && <p className="max-w-[75%] bg-[#36404A] rounded-lg py-3 p-2">{msg.text}</p>
+                                        msg.text && <p className=" bg-[#36404A] rounded-lg py-2 p-2 z-10">{msg.text}</p>
                                     }
-                                </>
+                                </div>
                             }
                         </div>
                     ))

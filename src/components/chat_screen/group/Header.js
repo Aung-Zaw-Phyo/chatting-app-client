@@ -72,34 +72,34 @@ const Header = ({group, onSideNavChange}) => {
                 <div className="relative flex items-center cursor-pointer text-[#ffffff76] hover:text-[white] duration-300">
                     <div ref={iconRef} ><FiSettings size={25} onClick={settingChangeHandler} /></div>
                     <div className={`
-                        ${isSetting ? '  ' : ' hidden '} absolute shadow-lg left-[-450%] top-[20%] text-end rounded-lg text-[#fff]
+                        ${isSetting ? '  ' : ' hidden '} absolute shadow-lg left-[-100%] sm:left-[-170%] md:left-[-450%] top-[140%] sm:top-[20%] text-end rounded-lg text-[#fff]
                     `} ref={settingRef}>
                         <div className="relative group p-2 px-4 rounded-tr-lg rounded-tl-lg bg-[#3E4A56] hover:bg-[#7269EF] duration-200">
                             CREATOR
 
                             <div className=" 
                                 hidden group-hover:flex items-center justify-end  shadow-lg
-                                absolute min-w-[250px] text-nowrap right-[110%] top-0 p-2 text-[18px] text-[#fff] 
+                                absolute min-w-[170px] sm:min-w-[230px] text-nowrap right-[110%] top-0 p-2 text-[14px] sm:text-[16px] text-[#fff] 
                                 bg-[#7269EF] rounded-lg 
                             ">
                                 {group.creator.name}
-                                <img className="w-[40px] h-[40px] rounded-full ml-2" src={group.creator.image} alt="" />
+                                <img className="w-[30px] h-[30px] sm:w-[35px] sm:h-[35px] rounded-full ml-2" src={group.creator.image} alt="" />
                             </div>    
                         </div>
                         <div className={`${!isCreator && ' rounded-br-lg rounded-bl-lg '} relative group p-2 px-4 bg-[#3E4A56] hover:bg-[#7269EF] duration-200`}>
                             MEMBERS
                             <div className=" 
-                                hidden group-hover:block absolute right-[110%] top-0
+                                hidden group-hover:block absolute right-[105%] sm:right-[110%] top-0
                             ">
                                 {
                                     group.members.map(member => (
                                         <div key={member.id} className="
                                             flex items-center justify-end mb-1  shadow-lg
-                                            min-w-[250px]  p-2 text-[18px] text-[#fff] 
+                                            min-w-[170px] sm:min-w-[230px]  p-2 text-[14px] sm:text-[16px] text-[#fff] 
                                             bg-[#7269EF] rounded-lg
                                     ">
                                             {member.name}
-                                            <img className="w-[40px] h-[40px] rounded-full ml-2" src={member.image} alt="" />
+                                            <img className="w-[30px] h-[30px] sm:w-[35px] sm:h-[35px] rounded-full ml-2" src={member.image} alt="" />
                                         </div>
                                     ))
                                 }

@@ -24,6 +24,9 @@ const useHttp = () => {
             if(response.status === 401) {
                 throw await response.json()
             }
+            if(response.status === 403) {
+                throw await response.json()
+            }
             if (!response.ok) {
                 throw new Error('Request failed!');
             }

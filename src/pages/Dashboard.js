@@ -6,8 +6,8 @@ import UserList from "../components/dashboard/UserList";
 const Error = () => {
     const navigate = useNavigate()
     const error = useAsyncError()
-    if(error.status === 403) {
-        setTimeout(navigate, 0, '/')
+    if(error.status === 401) {
+        setTimeout(navigate, 0, '/login')
     }
     const message = error.message || 'Something wrong.'
     return (
@@ -33,7 +33,7 @@ export default Dashboard;
 const usersLoader = async () => {
     const status = getAuth().status;
     if(status !== 'admin') {
-        throw json({message: 'Unauthorized!'}, {status: 403})
+        throw json({message: 'Unauthorized!'}, {status: 401})
     }
     const response = await fetch(process.env.REACT_APP_API_URL + '/admin/users', {
         method: 'GET',

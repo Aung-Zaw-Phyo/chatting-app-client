@@ -28,6 +28,12 @@ const privateSlice = createSlice({
             const result_msgs = cp_msgs.concat(message)
             state.messages = result_msgs
         },
+        deleteMessage(state, action) {
+            const message = action.payload
+            const cp_msgs = [...state.messages]
+            const result_msgs = cp_msgs.filter(msg => msg.id !== message.id)
+            state.messages = result_msgs
+        },
         paginateMessage(state, action) {
             const messages = action.payload
             const cp_msgs = [...state.messages]
