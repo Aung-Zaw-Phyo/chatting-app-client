@@ -2,7 +2,6 @@ import React from "react";
 import UserItem from "./UserItem";
 
 const UserList = (props) => {
-    console.log(props.data)
     const users = props.data.data.users
     return (
         <div className="grid grid-cols-4 gap-3">

@@ -4,6 +4,7 @@ import {TiMessages} from 'react-icons/ti'
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useHttp from "../../hooks/use-http";
+import { getAuth } from "../../utils/helper";
 
 const UserDetail = ({data}) => {
     const navigate = useNavigate()
@@ -34,8 +35,11 @@ const UserDetail = ({data}) => {
                     }
                 }
                 deleteSendRequest({
-                    url: process.env.REACT_APP_API_URL + '/admin/user/' + id,
+                    url: process.env.REACT_APP_API_URL + '/chat/admin/user/' + id,
                     method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + getAuth().token
+                    }
                 }, applyData)
             }
         }); 

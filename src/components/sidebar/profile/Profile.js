@@ -7,6 +7,7 @@ import { AiFillDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 import useHttp from "../../../hooks/use-http";
 import Cookies from "js-cookie";
+import { getAuth } from "../../../utils/helper";
 
 const Profile = (props) => {
     const [user, setUser] = useState(null)
@@ -73,8 +74,11 @@ const Profile = (props) => {
                     }
                 }
                 deleteSendRequest({
-                    url: process.env.REACT_APP_API_URL + '/delete/account/',
+                    url: process.env.REACT_APP_API_URL + '/chat/delete/account/',
                     method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + getAuth().token
+                    }
                 }, applyData)
             }
         }); 
@@ -144,10 +148,13 @@ export default Profile;
 
 export const action = async ({request, params}) => {
     const formData = await request.formData()
-    const response = await fetch(process.env.REACT_APP_API_URL + '/update/profile', {
+    const response = await fetch(process.env.REACT_APP_API_URL + '/chat/update/profile', {
         method: 'POST',
         credentials: 'include',
-        body: formData
+        body: formData,
+        headers: {
+            'Authorization': 'Bearer ' + getAuth().token
+        }
     })
 
     if(response.status === 422){

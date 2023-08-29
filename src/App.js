@@ -44,21 +44,21 @@ const router = createBrowserRouter([
                     },
                 ]
             },
-        ]
-    },
-    {
-        path: '/admin',
-        children: [
             {
                 path: '/admin',
-                element: <Dashboard/>,
-                loader: adminLoader
+                children: [
+                    {
+                        path: '/admin',
+                        element: <Dashboard/>,
+                        loader: adminLoader
+                    },
+                    {
+                        path: 'detail/:id',
+                        element: <Detail/>,
+                        loader: detailLoader
+                    }
+                ]
             },
-            {
-                path: 'detail/:id',
-                element: <Detail/>,
-                loader: detailLoader
-            }
         ]
     },
     {

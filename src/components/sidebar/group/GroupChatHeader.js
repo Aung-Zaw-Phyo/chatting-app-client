@@ -6,6 +6,7 @@ import CloseSideBar from "../../UI/CloseSideBar";
 import { useDispatch } from "react-redux";
 import useHttp from "../../../hooks/use-http";
 import { uiActions } from "../../../store/ui-slice";
+import { getAuth } from "../../../utils/helper";
 
 const GroupChatHeader = () => {
     const [isCreateForm, setIsCreateForm] = useState(false)
@@ -28,10 +29,11 @@ const GroupChatHeader = () => {
         }
 
         sendRequest({
-            url: process.env.REACT_APP_API_URL + '/group/' + search,
+            url: process.env.REACT_APP_API_URL + '/chat/group/' + search,
             method: 'GET',
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + getAuth().token
             },
             // body: {search: search}
         }, applyData)

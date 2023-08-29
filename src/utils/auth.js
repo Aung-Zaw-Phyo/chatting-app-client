@@ -7,12 +7,9 @@ export const authCheckLoader = () => {
         const encryptedBytes = Cookies.get('auth') 
         const decryptedBytes = CryptoJS.AES.decrypt(encryptedBytes, process.env.REACT_APP_SECRET_KEY);
         const auth = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
-        if(!auth.id || !auth.email) {
-            Cookies.remove('auth')
-            throw new Error('Unauthenticated!')
-        }
         return auth
     } catch (error) {
+        Cookies.remove('auth')
         return redirect('/login')
     }
 }
@@ -22,23 +19,19 @@ export const authFormLoader = () => {
         const encryptedBytes = Cookies.get('auth')
         const decryptedBytes = CryptoJS.AES.decrypt(encryptedBytes, process.env.REACT_APP_SECRET_KEY);
         const auth = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
-        if(!auth.id || !auth.email) {
-            Cookies.remove('auth')
-            throw new Error('Unauthenticated!')
-        }
         return redirect('/')
     } catch (error) {
+        Cookies.remove('auth')
         return true
     }
 }
 
 
 export const logoutLoader = async () => {
-    const response = fetch(process.env.REACT_APP_API_URL + '/logout', {
-        method: 'POST',
-        credentials: 'include'
-    })
-
+    // const response = fetch(process.env.REACT_APP_API_URL + '/chat/logout', {
+    //     method: 'POST',
+    //     credentials: 'include'
+    // })
     Cookies.remove('auth')
     return redirect('/login')
 }

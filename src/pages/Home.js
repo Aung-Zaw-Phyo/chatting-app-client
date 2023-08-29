@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from "react";
-import { Await, defer, json, useAsyncError, useLoaderData, useParams } from "react-router-dom";
+import { Await, defer, json, useAsyncError, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FiMessageSquare } from "react-icons/fi";
 import { privateActions } from "../store/private-slice";
@@ -52,7 +52,7 @@ const Home = ({ chatType }) => {
     const id = params.id
 
     useEffect(() => {
-        let socket = initSocket("http://localhost:5000");
+        let socket = initSocket(process.env.REACT_APP_API_URL);
         socket.emit('join-room', getAuth().id);
 
         socket.on('receive-msg', data => {
@@ -143,9 +143,9 @@ const chatLoader = async (request, params) => {
     const parsedUrl = new URL(originalUrl)
     const type = parsedUrl.pathname.split("/")[1];
 
-    let url = process.env.REACT_APP_API_URL + '/private/' + id;
+    let url = process.env.REACT_APP_API_URL + '/chat/private/' + id;
     if(type === 'g') {
-        url = process.env.REACT_APP_API_URL + '/group/messages/' + id;
+        url = process.env.REACT_APP_API_URL + '/chat/group/messages/' + id;
     }
 
     const response = await fetch(url, {
@@ -153,7 +153,8 @@ const chatLoader = async (request, params) => {
         credentials: 'include',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getAuth().token
         }
     })
 

@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Await, defer, json, redirect, useAsyncError, useLoaderData } from "react-router-dom";
+import { Await, defer, json, useAsyncError, useLoaderData } from "react-router-dom";
 import UserDetail from "../components/dashboard/UserDetail";
 import { getAuth } from "../utils/helper";
 
@@ -32,12 +32,13 @@ const detailLoader = async (request, params) => {
         throw json({message: 'Unauthorized!'}, {status: 403})
     }
     const id = params.id
-    const response = await fetch(process.env.REACT_APP_API_URL + '/admin/user/' + id, {
+    const response = await fetch(process.env.REACT_APP_API_URL + '/chat/admin/user/' + id, {
         method: 'GET',
         credentials: 'include',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getAuth().token
         }
     })
     if(!response.ok) {

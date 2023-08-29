@@ -1,4 +1,5 @@
 import send_mp3 from '../assets/mp3/send.mp3'
+import { getAuth } from '../utils/helper'
 import { groupActions } from './group-slice'
 import { privateActions } from "./private-slice"
 
@@ -14,14 +15,15 @@ export const addPrivateMessageRequest = (data, id) => {
             dispatch(privateActions.addTempMsg(data.text))
         }
 
-        let url = process.env.REACT_APP_API_URL + '/private/create/' + id;
+        let url = process.env.REACT_APP_API_URL + '/chat/private/create/' + id;
 
         const sendRequest = async () => {
             const response = await fetch(url, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + getAuth().token
                 },
                 body: formData
             })
@@ -60,14 +62,15 @@ export const addGroupMessageRequest = (data, id) => {
             dispatch(groupActions.addTempMsg(data.text))
         }
 
-        let url = process.env.REACT_APP_API_URL + '/group/create/' + id;
+        let url = process.env.REACT_APP_API_URL + '/chat/group/create/' + id;
 
         const sendRequest = async () => {
             const response = await fetch(url, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + getAuth().token
                 },
                 body: formData
             })

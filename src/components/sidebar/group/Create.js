@@ -8,6 +8,7 @@ import useHttp from "../../../hooks/use-http";
 import useInput from "../../../hooks/use-input";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../../store/ui-slice";
+import { getAuth } from "../../../utils/helper";
 
 const Backdrop = ({onChange}) => {
     return (
@@ -55,11 +56,12 @@ const Modal = (props) => {
             }
         }
         createSendRequest({
-            url: process.env.REACT_APP_API_URL + '/group/create',
+            url: process.env.REACT_APP_API_URL + '/chat/group/create',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getAuth().token
             },
             body: {group_name: nameValue, description: descrptionValue, members: members}
         }, applyData)
@@ -88,11 +90,12 @@ const Modal = (props) => {
             setSearchInput('')
         }
         searchSendRequest({
-            url: process.env.REACT_APP_API_URL + '/group/search/member',
+            url: process.env.REACT_APP_API_URL + '/chat/group/search/member',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getAuth().token
             },
             body: {email: searchInput}
         }, applyData)

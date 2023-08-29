@@ -7,6 +7,7 @@ import { addPrivateMessageRequest } from "../../../store/chat-actions";
 import { AiFillDelete } from "react-icons/ai";
 import { privateActions } from "../../../store/private-slice";
 import { groupActions } from "../../../store/group-slice";
+import { getAuth } from "../../../utils/helper";
 
 const Message = (props) => {
     const [page, setPage] = useState(1)
@@ -66,11 +67,12 @@ const Message = (props) => {
             dispatch(privateActions.deleteMessage(message))
         }
         deleteRequest({
-            url: 'http://localhost:5000/chat/private/delete/' + msg_id ,
+            url: process.env.REACT_APP_API_URL + '/chat/private/delete/' + msg_id ,
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getAuth().token
             }
         }, applyData)
     }
@@ -96,11 +98,12 @@ const Message = (props) => {
                 }
                 setPage((prevState) => pg)
                 paginateRequest({
-                    url: 'http://localhost:5000/chat/private/' + id + '?page=' + pg,
+                    url: process.env.REACT_APP_API_URL + '/chat/private/' + id + '?page=' + pg,
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + getAuth().token
                     }
                 }, applyData)
             }

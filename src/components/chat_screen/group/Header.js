@@ -37,8 +37,11 @@ const Header = ({group, onSideNavChange}) => {
                     }
                 }
                 deleteSendRequest({
-                    url: process.env.REACT_APP_API_URL + '/group/delete/' + group.id,
+                    url: process.env.REACT_APP_API_URL + '/chat/group/delete/' + group.id,
                     method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + getAuth().token
+                    }
                 }, applyData)
             }
         }); 

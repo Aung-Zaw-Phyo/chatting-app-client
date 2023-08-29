@@ -4,6 +4,7 @@ import CloseSideBar from "../../UI/CloseSideBar";
 import useHttp from "../../../hooks/use-http";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../../../store/ui-slice";
+import { getAuth } from "../../../utils/helper";
 
 const ChatHeader = () => {
     const {
@@ -25,10 +26,11 @@ const ChatHeader = () => {
         }
 
         sendRequest({
-            url: process.env.REACT_APP_API_URL + '/users/' + search,
+            url: process.env.REACT_APP_API_URL + '/chat/users/' + search,
             method: 'GET',
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + getAuth().token
             }
         }, applyData)
     }

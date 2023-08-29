@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { getAuth } from "../utils/helper";
-import { Await, defer, json, redirect, useAsyncError, useLoaderData, useNavigate } from "react-router-dom";
+import { Await, defer, json, useAsyncError, useLoaderData, useNavigate } from "react-router-dom";
 import UserList from "../components/dashboard/UserList";
 
 const Error = () => {
@@ -35,12 +35,13 @@ const usersLoader = async () => {
     if(status !== 'admin') {
         throw json({message: 'Unauthorized!'}, {status: 401})
     }
-    const response = await fetch(process.env.REACT_APP_API_URL + '/admin/users', {
+    const response = await fetch(process.env.REACT_APP_API_URL + '/chat/admin/users', {
         method: 'GET',
         credentials: 'include',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getAuth().token
         }
     })
     if(!response.ok) {
