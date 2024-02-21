@@ -1,7 +1,13 @@
 import send_mp3 from '../assets/mp3/send.mp3'
-import { getAuth } from '../utils/helper'
-import { groupActions } from './group-slice'
-import { privateActions } from "./private-slice"
+import {
+    getAuth
+} from '../utils/helper'
+import {
+    groupActions
+} from './group-slice'
+import {
+    privateActions
+} from "./private-slice"
 
 const send_noti = new Audio(send_mp3)
 
@@ -11,7 +17,7 @@ export const addPrivateMessageRequest = (data, id) => {
         formData.append('text', data.text)
         formData.append('image', data.image)
 
-        if(data.text) {
+        if (data.text) {
             dispatch(privateActions.addTempMsg(data.text))
         }
 
@@ -28,7 +34,7 @@ export const addPrivateMessageRequest = (data, id) => {
                 body: formData
             })
 
-            if(!response.ok) {
+            if (!response.ok) {
                 throw response
             }
             return response
@@ -42,14 +48,14 @@ export const addPrivateMessageRequest = (data, id) => {
                 console.log("Audio playback failed:", error);
             });
         } catch (error) {
-            if(error.status === 422) {
+            if (error.status === 422) {
                 const resData = await error.json()
                 dispatch(privateActions.setError(resData.message || 'Something wrong.'))
-            }else {
+            } else {
                 dispatch(privateActions.setError(error.message || 'Something wrong.'))
             }
         }
-    } 
+    }
 }
 
 export const addGroupMessageRequest = (data, id) => {
@@ -58,7 +64,7 @@ export const addGroupMessageRequest = (data, id) => {
         formData.append('text', data.text)
         formData.append('image', data.image)
 
-        if(data.text) {
+        if (data.text) {
             dispatch(groupActions.addTempMsg(data.text))
         }
 
@@ -75,7 +81,7 @@ export const addGroupMessageRequest = (data, id) => {
                 body: formData
             })
 
-            if(!response.ok) {
+            if (!response.ok) {
                 throw response
             }
             return response
@@ -89,12 +95,12 @@ export const addGroupMessageRequest = (data, id) => {
                 console.log("Audio playback failed:", error);
             });
         } catch (error) {
-            if(error.status === 422) {
+            if (error.status === 422) {
                 const resData = await error.json()
                 dispatch(groupActions.setError(resData.message || 'Something wrong.'))
-            }else {
+            } else {
                 dispatch(groupActions.setError(error.message || 'Something wrong.'))
             }
         }
-    } 
+    }
 }
