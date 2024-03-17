@@ -1,44 +1,43 @@
 import React from "react";
-import {RouterProvider, createBrowserRouter} from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './App.css'
-import Home, {loader as homeLoader} from "./pages/Home";
-import Login, {action as loginAction} from "./pages/Login";
-import Signup, {action as signupAction} from "./pages/Signup";
+import Home, { loader as homeLoader } from "./pages/Home";
+import Login, { action as loginAction } from "./pages/Login";
+import Signup, { action as signupAction } from "./pages/Signup";
 import { usersLoader } from './utils/rootLoader'
 import Error from "./pages/Error";
 import Root from "./pages/Root";
-import {action as updateProfileAction} from './components/sidebar/profile/Profile'
+import { action as updateProfileAction } from './components/sidebar/profile/Profile'
 import { authCheckLoader, authFormLoader, logoutLoader } from "./utils/auth";
-import Dashboard, {loader as adminLoader} from "./pages/Dashboard";
-import Detail, {loader as detailLoader} from "./pages/Detail";
- 
-const router = createBrowserRouter([
-    {
+import Dashboard, { loader as adminLoader } from "./pages/Dashboard";
+import Detail, { loader as detailLoader } from "./pages/Detail";
+import Status, { loader as checkAccountLoader, action as ResendAction } from "./pages/Status";
+import Verification, {loader as checkVerificatinoLoader} from "./pages/Verification";
+
+const router = createBrowserRouter([{
         path: '',
-        errorElement: <Error/>,
+        errorElement: < Error / > ,
         loader: authCheckLoader,
-        children: [
-            {
+        children: [{
                 path: '',
                 id: 'root',
                 loader: usersLoader,
-                element: <Root/>,
-                children: [
-                    {
+                element: < Root / > ,
+                children: [{
                         index: true,
-                        element: <Home/>, 
+                        element: < Home / > ,
                         loader: homeLoader,
                         action: updateProfileAction
                     },
                     {
                         path: 'p/:id',
-                        element: <Home chatType="private"/>,
+                        element: < Home chatType = "private" / > ,
                         loader: homeLoader,
                         action: updateProfileAction
                     },
                     {
                         path: 'g/:id',
-                        element: <Home chatType="group"/>,
+                        element: < Home chatType = "group" / > ,
                         loader: homeLoader,
                         action: updateProfileAction
                     },
@@ -46,15 +45,14 @@ const router = createBrowserRouter([
             },
             {
                 path: '/admin',
-                children: [
-                    {
+                children: [{
                         path: '/admin',
-                        element: <Dashboard/>,
+                        element: < Dashboard / > ,
                         loader: adminLoader
                     },
                     {
                         path: 'detail/:id',
-                        element: <Detail/>,
+                        element: < Detail / > ,
                         loader: detailLoader
                     }
                 ]
@@ -63,17 +61,30 @@ const router = createBrowserRouter([
     },
     {
         path: '/login',
-        errorElement: <Error/>,
-        element: <Login/>,
+        errorElement: < Error / > ,
+        element: < Login / > ,
         action: loginAction,
         loader: authFormLoader
     },
     {
-        path:  '/signup',
-        errorElement: <Error/>,
-        element: <Signup/>, 
+        path: '/signup',
+        errorElement: < Error / > ,
+        element: < Signup / > ,
         action: signupAction,
         loader: authFormLoader
+    },
+    {
+        path: '/account/status',
+        errorElement: < Error / > ,
+        element: < Status / > ,
+        action: ResendAction,
+        loader: checkAccountLoader
+    },
+    {
+        path: '/verification/:code',
+        errorElement: < Error / > ,
+        element: < Verification / > ,
+        loader: checkVerificatinoLoader
     },
     {
         path: '/logout',
@@ -82,8 +93,7 @@ const router = createBrowserRouter([
 ])
 
 const App = () => {
-    return <RouterProvider router={router} />
+    return <RouterProvider router = { router }
+    />
 };
 export default App;
-
-

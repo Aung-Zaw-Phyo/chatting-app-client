@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import CryptoJS from "crypto-js";
 import {Form, Link, json, redirect, useActionData} from 'react-router-dom'
 import Input from "../components/UI/Input";
-import Cookies from "js-cookie";
+import base64 from 'base-64'
 
 const Signup = () => {
     const [error, setError] = useState(null)
@@ -59,17 +58,5 @@ export const action = async ({request, params}) => {
     if(!response.ok) {
         throw json({message: 'Something wrong.'}, {status: 500})
     }
-
-    const resData = await response.json()
-    const user = resData.data.user
-    let encode = CryptoJS.AES.encrypt(JSON.stringify({
-        id: user.id, 
-        email: user.email, 
-        status: user.status,
-        token: resData.data.token
-    }), process.env.REACT_APP_SECRET_KEY).toString();
-    Cookies.set('auth', encode, {
-        expires: 1
-    })
-    return redirect('/')
+    return redirect('/account/status?hash=' + base64.encode(data.get('email')))
 }

@@ -4,7 +4,7 @@ import { redirect } from "react-router-dom";
 
 export const authCheckLoader = () => {
     try {
-        const encryptedBytes = Cookies.get('auth') 
+        const encryptedBytes = Cookies.get('auth')
         const decryptedBytes = CryptoJS.AES.decrypt(encryptedBytes, process.env.REACT_APP_SECRET_KEY);
         const auth = JSON.parse(decryptedBytes.toString(CryptoJS.enc.Utf8));
         return auth
@@ -26,8 +26,7 @@ export const authFormLoader = () => {
     }
 }
 
-
-export const logoutLoader = async () => {
+export const logoutLoader = async() => {
     // const response = fetch(process.env.REACT_APP_API_URL + '/chat/logout', {
     //     method: 'POST',
     //     credentials: 'include'
