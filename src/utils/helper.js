@@ -49,3 +49,10 @@ export const success = (message) => {
         icon: 'success',
     });
 }
+
+export const generateMailFormat = (email) => {
+    const arr = email.split('@')
+    const name = arr[0];
+    const showLetters = name.substring(0, 4);
+    return showLetters + "****@" + arr[1]
+}

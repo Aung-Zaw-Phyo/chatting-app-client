@@ -140,7 +140,7 @@ const GroupMessage = (props) => {
                                         userId !== msg.user.id && <span className="text-[#dddddda1] text-[14px] p-1">{msg.user.name}</span>
                                     }
                                     {
-                                        msg.image && <img src={msg.image} className="w-[160px] rounded-lg mb-1 z-10" alt="" />
+                                        msg.image && <img src={msg.image} className="w-[160px] rounded-lg mb-1 z-[9]" alt="" />
                                     }
                                     {
                                         msg.text && <p className=" bg-[#36404A] rounded-lg py-2 p-2 z-10">{msg.text}</p>

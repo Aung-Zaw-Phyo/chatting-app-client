@@ -47,6 +47,32 @@ const Header = ({group, onSideNavChange}) => {
         }); 
     }
 
+    const leaveGroupHandler = () => {
+        Swal.fire({
+            title: "Are you sure you want to leave from this group ?",
+            icon: "warning",
+            dangerMode: true,
+            confirmButtonText: 'Confirm'
+        })
+        .then(willDelete => {
+            if (willDelete.isConfirmed) {
+                const applyData = (data) => {
+                    if(data.status === true) {
+                        dispatch(uiActions.removeGroup(group.id))
+                        navigate('/')
+                    }
+                }
+                deleteSendRequest({
+                    url: process.env.REACT_APP_API_URL + '/chat/group/leave/' + group.id,
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'Bearer ' + getAuth().token
+                    }
+                }, applyData)
+            }
+        }); 
+    }
+
     const handleClickOutside = useCallback((event) => {
         if (settingRef.current && !settingRef.current.contains(event.target) && iconRef.current && !iconRef.current.contains(event.target)) {
             setIsSetting((prevState) => false)
@@ -75,7 +101,7 @@ const Header = ({group, onSideNavChange}) => {
                 <div className="relative flex items-center cursor-pointer text-[#ffffff76] hover:text-[white] duration-300">
                     <div ref={iconRef} ><FiSettings size={25} onClick={settingChangeHandler} /></div>
                     <div className={`
-                        ${isSetting ? '  ' : ' hidden '} absolute shadow-lg left-[-100%] sm:left-[-170%] md:left-[-450%] top-[140%] sm:top-[20%] text-end rounded-lg text-[#fff]
+                        ${isSetting ? '  ' : ' hidden '} absolute shadow-lg left-[-100%] sm:left-[-170%] md:left-[-450%] top-[140%] sm:top-[20%] text-center rounded-lg text-[#fff]
                     `} ref={settingRef}>
                         <div className="relative group p-2 px-4 rounded-tr-lg rounded-tl-lg bg-[#3E4A56] hover:bg-[#7269EF] duration-200">
                             CREATOR
@@ -107,6 +133,11 @@ const Header = ({group, onSideNavChange}) => {
                                     ))
                                 }
                             </div> 
+                        </div>
+                        <div className=" p-2 px-4  bg-[#3E4A56] hover:bg-[#7269EF] duration-200"
+                            onClick={leaveGroupHandler}
+                        >
+                            LEAVE
                         </div>
 
                         {
