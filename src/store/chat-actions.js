@@ -68,7 +68,7 @@ export const addGroupMessageRequest = (data, id) => {
             dispatch(groupActions.addTempMsg(data.text))
         }
 
-        let url = process.env.REACT_APP_API_URL + '/group-messages/create/' + id;
+        let url = process.env.REACT_APP_API_URL + `/groups/${id}/messages/`;
 
         const sendRequest = async () => {
             const response = await fetch(url, {

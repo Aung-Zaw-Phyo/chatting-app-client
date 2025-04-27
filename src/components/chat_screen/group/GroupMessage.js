@@ -69,7 +69,7 @@ const GroupMessage = (props) => {
             dispatch(groupActions.deleteMessage(message))
         }
         deleteRequest({
-            url: process.env.REACT_APP_API_URL + '/group-messages/message/' + msg_id ,
+            url: process.env.REACT_APP_API_URL + `/groups/${id}/messages/${msg_id}`,
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',

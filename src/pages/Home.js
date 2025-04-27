@@ -145,7 +145,7 @@ const chatLoader = async (request, params) => {
 
     let url = process.env.REACT_APP_API_URL + `/private-messages?receiverId=${id}`;
     if(type === 'g') {
-        url = process.env.REACT_APP_API_URL + '/group-messages/messages/' + id;
+        url = process.env.REACT_APP_API_URL + `/groups/${id}/messages/`;
     }
 
     const response = await fetch(url, {

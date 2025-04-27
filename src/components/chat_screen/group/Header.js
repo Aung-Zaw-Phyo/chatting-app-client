@@ -37,7 +37,7 @@ const Header = ({group, onSideNavChange}) => {
                     }
                 }
                 deleteSendRequest({
-                    url: process.env.REACT_APP_API_URL + '/group-messages/delete/' + group.id,
+                    url: process.env.REACT_APP_API_URL + '/groups/' + group.id,
                     method: 'DELETE',
                     headers: {
                         'Authorization': 'Bearer ' + getAuth().token
@@ -63,7 +63,7 @@ const Header = ({group, onSideNavChange}) => {
                     }
                 }
                 deleteSendRequest({
-                    url: process.env.REACT_APP_API_URL + '/group-messages/leave/' + group.id,
+                    url: process.env.REACT_APP_API_URL + `/groups/${group.id}/leave/`,
                     method: 'PUT',
                     headers: {
                         'Authorization': 'Bearer ' + getAuth().token

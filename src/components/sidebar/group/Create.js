@@ -56,7 +56,7 @@ const Modal = (props) => {
             }
         }
         createSendRequest({
-            url: process.env.REACT_APP_API_URL + '/group-messages/create',
+            url: process.env.REACT_APP_API_URL + '/groups',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -90,7 +90,7 @@ const Modal = (props) => {
             setSearchInput('')
         }
         searchSendRequest({
-            url: process.env.REACT_APP_API_URL + '/group-messages/search/member',
+            url: process.env.REACT_APP_API_URL + '/groups/search-member',
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
