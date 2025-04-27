@@ -32,7 +32,7 @@ const detailLoader = async (request, params) => {
         throw json({message: 'Unauthorized!'}, {status: 403})
     }
     const id = params.id
-    const response = await fetch(process.env.REACT_APP_API_URL + '/chat/admin/user/' + id, {
+    const response = await fetch(process.env.REACT_APP_API_URL + '/admins/user/' + id, {
         method: 'GET',
         credentials: 'include',
         headers: {

@@ -69,7 +69,7 @@ const GroupMessage = (props) => {
             dispatch(groupActions.deleteMessage(message))
         }
         deleteRequest({
-            url: process.env.REACT_APP_API_URL + '/chat/group/message/' + msg_id ,
+            url: process.env.REACT_APP_API_URL + '/group-messages/message/' + msg_id ,
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -100,7 +100,7 @@ const GroupMessage = (props) => {
                 }
                 setPage((prevState) => pg)
                 paginateRequest({
-                    url: process.env.REACT_APP_SECRET_KEY + '/chat/private/' + id + '?page=' + pg,
+                    url: process.env.REACT_APP_SECRET_KEY + `/private-messages?receiverId=${id}&page=${pg}`,
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',

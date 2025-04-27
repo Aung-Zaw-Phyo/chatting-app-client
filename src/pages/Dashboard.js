@@ -45,7 +45,7 @@ const usersLoader = async () => {
     throw json({ message: "Unauthorized!" }, { status: 401 });
   }
   const response = await fetch(
-    process.env.REACT_APP_API_URL + "/chat/admin/users",
+    process.env.REACT_APP_API_URL + "/admins",
     {
       method: "GET",
       credentials: "include",

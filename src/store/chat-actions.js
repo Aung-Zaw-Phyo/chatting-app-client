@@ -21,7 +21,7 @@ export const addPrivateMessageRequest = (data, id) => {
             dispatch(privateActions.addTempMsg(data.text))
         }
 
-        let url = process.env.REACT_APP_API_URL + '/chat/private/create/' + id;
+        let url = process.env.REACT_APP_API_URL + `/private-messages?receiverId=${id}`;
 
         const sendRequest = async () => {
             const response = await fetch(url, {
@@ -68,7 +68,7 @@ export const addGroupMessageRequest = (data, id) => {
             dispatch(groupActions.addTempMsg(data.text))
         }
 
-        let url = process.env.REACT_APP_API_URL + '/chat/group/create/' + id;
+        let url = process.env.REACT_APP_API_URL + '/group-messages/create/' + id;
 
         const sendRequest = async () => {
             const response = await fetch(url, {

@@ -23,7 +23,7 @@ const Signup = () => {
                     <Input type='text' name='name' placeholder='Enter your name' focus={true} />
                     <Input type='email' name='email' placeholder='Enter your email' />
                     <Input type='password' name='password' placeholder='Enter your password' />
-                    <button className="w-full">SIGN IN</button>
+                    <button className="w-full">SIGN UP</button>
                 </Form>
                 <p className="text-center"> Already have an account? <Link to='/login' className="text-[#ffbe33]">Sign in</Link> </p>
             </div>

@@ -67,7 +67,7 @@ const Message = (props) => {
             dispatch(privateActions.deleteMessage(message))
         }
         deleteRequest({
-            url: process.env.REACT_APP_API_URL + '/chat/private/delete/' + msg_id ,
+            url: process.env.REACT_APP_API_URL + '/private-messages/' + msg_id ,
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -98,7 +98,7 @@ const Message = (props) => {
                 }
                 setPage((prevState) => pg)
                 paginateRequest({
-                    url: process.env.REACT_APP_API_URL + '/chat/private/' + id + '?page=' + pg,
+                    url: process.env.REACT_APP_API_URL + `/private-messages?receiverId=${id}&page=${pg}`,
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
@@ -110,7 +110,6 @@ const Message = (props) => {
         }
 
     }
-
     return (
         <>
             <div className="p-5 overflow-y-auto no-scrollbar relative mt-0" id='chat-feed' style={{ height: 'calc(100vh - 190px)' }}
@@ -121,12 +120,12 @@ const Message = (props) => {
                 }
                 {
                     messages && messages.map((msg, index) => (
-                        <div key={msg.id} className={`${id === msg.from.id ? ' items-start text-start ': ' items-end text-end '} d-inline-block flex flex-col mb-2 `}>
+                        <div key={msg.id} className={`${id === msg.sender.id ? ' items-start text-start ': ' items-end text-end '} d-inline-block flex flex-col mb-2 `}>
 
-                            { (msg.to.id === id || msg.from.id === id) &&
-                                <div className={`${id === msg.from.id ? ' ' : ' items-end '} relative group flex flex-col max-w-[75%]`}>
+                            { (msg.receiver.id === id || msg.sender.id === id) &&
+                                <div className={`${id === msg.sender.id ? ' ' : ' items-end '} relative group flex flex-col max-w-[75%]`}>
                                     {
-                                        id !== msg.from.id &&
+                                        id !== msg.sender.id &&
                                         <div className="
                                             absolute top-0 right-[100%] p-2  text-[#ffffff76]
                                             hover:text-[white] duration-300

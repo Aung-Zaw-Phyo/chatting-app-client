@@ -2,7 +2,7 @@ import { defer, json } from "react-router-dom"
 import { getAuth } from "./helper";
 
 const loader = async () => {
-    const response = await fetch(process.env.REACT_APP_API_URL + '/chat/users', {
+    const response = await fetch(process.env.REACT_APP_API_URL + '/users', {
         method: 'GET',
         credentials: 'include',
         headers: {

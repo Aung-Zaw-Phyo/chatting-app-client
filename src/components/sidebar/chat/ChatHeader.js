@@ -23,7 +23,7 @@ const ChatHeader = () => {
 
     sendRequest(
       {
-        url: process.env.REACT_APP_API_URL + "/chat/users/" + search,
+        url: process.env.REACT_APP_API_URL + "/users/" + search,
         method: "GET",
         headers: {
           Accept: "application/json",

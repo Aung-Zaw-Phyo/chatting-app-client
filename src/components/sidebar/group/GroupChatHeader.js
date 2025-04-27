@@ -29,7 +29,7 @@ const GroupChatHeader = () => {
         }
 
         sendRequest({
-            url: process.env.REACT_APP_API_URL + '/chat/group/' + search,
+            url: process.env.REACT_APP_API_URL + '/group-messages/' + search,
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

@@ -35,7 +35,7 @@ const UserDetail = ({data}) => {
                     }
                 }
                 deleteSendRequest({
-                    url: process.env.REACT_APP_API_URL + '/chat/admin/user/' + id,
+                    url: process.env.REACT_APP_API_URL + '/admins/user/' + id,
                     method: 'DELETE',
                     headers: {
                         'Authorization': 'Bearer ' + getAuth().token

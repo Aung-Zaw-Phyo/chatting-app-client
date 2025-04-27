@@ -24,7 +24,7 @@ const Login = () => {
                 <Form method="POST" className="mb-3">
                     <Input type='email' name='email' placeholder='Enter your email' focus={true} />
                     <Input type='password' name='password' placeholder='Enter your password' />
-                    <button className="w-full ">SIGN UP</button>
+                    <button className="w-full ">SIGN IN</button>
                 </Form>
                 <p className="text-center"> Don't have an account? <Link to='/signup' className="text-[#ffbe33] ml-1">Sign up</Link> </p>
             </div>
@@ -40,7 +40,7 @@ export const action = async ({request, params}) => {
         email: data.get('email'),
         password: data.get('password')
     }
-    const response = await fetch(process.env.REACT_APP_API_URL + '/chat/login', {
+    const response = await fetch(process.env.REACT_APP_API_URL + '/users/login', {
         method: 'POST',
         credentials: 'include',
         headers: {
