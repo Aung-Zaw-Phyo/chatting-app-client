@@ -52,7 +52,7 @@ const Home = ({ chatType }) => {
     const id = params.id
 
     useEffect(() => {
-        let socket = initSocket(process.env.REACT_APP_API_URL);
+        let socket = initSocket(process.env.SOCKET_HTTP);
         socket.emit('join-room', getAuth().id);
 
         socket.on('receive-msg', data => {
