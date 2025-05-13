@@ -98,7 +98,7 @@ const Header = ({group, onSideNavChange}) => {
                     <img className="w-[45px] h-[45px] rounded-full mr-3" src={group.image} alt="" />
                     <h1 className="text-[18px]">{group.name}</h1>
                 </div>  
-                <div className="relative flex items-center cursor-pointer text-[#ffffff76] hover:text-[white] duration-300">
+                <div className="relative flex items-center cursor-pointer text-[#ffffff76] hover:text-[white] duration-300 z-50">
                     <div ref={iconRef} ><FiSettings size={25} onClick={settingChangeHandler} /></div>
                     <div className={`
                         ${isSetting ? '  ' : ' hidden '} absolute shadow-lg left-[-100%] sm:left-[-170%] md:left-[-450%] top-[140%] sm:top-[20%] text-center rounded-lg text-[#fff]

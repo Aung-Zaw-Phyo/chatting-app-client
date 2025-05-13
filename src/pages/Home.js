@@ -52,9 +52,8 @@ const Home = ({ chatType }) => {
     const id = params.id
 
     useEffect(() => {
-        let socket = initSocket(process.env.SOCKET_HTTP);
+        let socket = initSocket(process.env.REACT_APP_SOCKET_HTTP);
         socket.emit('join-room', getAuth().id);
-
         socket.on('receive-msg', data => {
             receive_noti.play().catch((error) => {
                 console.log("Audio playback failed:", error);

@@ -125,7 +125,7 @@ const GroupMessage = (props) => {
                     messages && messages.map((msg, index) => (
                         <div key={msg.id} className={`${userId === msg.user.id ? ' items-end text-end ': ' items-start text-start '} d-inline-block flex flex-col mb-2 `}>
                             { msg.group.id === id  &&
-                                <div className={`${userId !== msg.user.id ? ' text-start items-start ' : ' items-end '} relative group flex flex-col max-w-[75%]`}>
+                                <div className={`${userId !== msg.user.id ? ' text-start items-start ' : ' items-end '} relative group flex flex-col max-w-[75%] z-0`}>
                                     {
                                         userId === msg.user.id &&
                                         <div className="
